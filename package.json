@@ -1,6 +1,6 @@
 {
   "name": "@tsutil/lenses",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "TypeScript data lenses for extracting and validating data properties.",
   "files": [
     "lib/**/*"
