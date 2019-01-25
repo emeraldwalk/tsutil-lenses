@@ -58,5 +58,9 @@ export function required<
   }
 }
 
+/**
+ * Helpers for common use cases.
+ */
 export const requiredObject = required('object');
+export const requiredNumber = required('number');
 export const requiredString = required('string');
