@@ -1,0 +1,2 @@
+# @tsutil/lenses [![Build Status](https://travis-ci.com/emeraldwalk/tsutil-lenses.svg?branch=master)](https://travis-ci.com/emeraldwalk/tsutil-lenses)
+TypeScript data lenses for extracting and validating data properties.
