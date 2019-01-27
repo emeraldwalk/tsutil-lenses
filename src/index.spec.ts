@@ -1,4 +1,4 @@
-import { get, required } from './lenses';
+import { get, required } from '.';
 
 describe('get', () => {
   it('should return expected field values', async () => {
