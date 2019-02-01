@@ -42,21 +42,29 @@ describe('get', () => {
 
 describe('required', () => {
   it('should return field value with given type.', () => {
+    const birthDayStr = '2018-01-01T00:00:00.000Z';
+
     const data = {
       name: 'john doe',
       age: 23,
+      birthDayStr,
+      birthDay: new Date(birthDayStr),
       meta: {}
     };
 
     const string = required('string')('name')(data);
     const number = required('number')('age')(data);
     const meta = required('object')('meta')(data);
+    const dateFromStr = required('date')('birthDayStr')(data);
+    const dateFromDt = required('date')('birthDay')(data);
 
     expect(typeof string).toEqual('string');
     expect(string).toEqual(data.name);
     expect(typeof number).toEqual('number');
     expect(number).toEqual(data.age);
     expect(typeof meta).toEqual('object');
+    expect(dateFromStr.toISOString()).toEqual(birthDayStr);
+    expect(dateFromDt.toISOString()).toEqual(birthDayStr);
     expect(meta).toEqual({});
   });
 
@@ -67,6 +75,26 @@ describe('required', () => {
     expect(() =>
       required('string')('name')(data)
     ).toThrow("Required field 'name' is missing.");
+  });
+
+  it('should throw an error if date type with not a date or string', () => {
+    const data = {
+      dt: 999
+    };
+
+    expect(() => {
+      required('date')('dt')(data);
+    }).toThrow("Required date field 'dt' is not a date string but is '999'.");
+  });
+
+  it('should throw an error if date type non-date string', () => {
+    const data = {
+      dt: 'not a date'
+    };
+
+    expect(() => {
+      required('date')('dt')(data);
+    }).toThrow("Required date field 'dt' is not a date string but is 'not a date'.");
   });
 
   it('should throw an exception if number type with non-number value.', () => {

@@ -22,8 +22,9 @@ export async function get<
  * @param type expected field type.
  */
 export function required<
-  T extends 'string' | 'object' | 'number',
+  T extends 'date' | 'string' | 'object' | 'number',
   V extends
+    T extends 'date' ? Date :
     T extends 'string' ? string :
     T extends 'object' ? Object :
     T extends 'number' ? number :
@@ -35,6 +36,18 @@ export function required<
     }
 
     const cast = {
+      date: (raw: any) => {
+        if(raw instanceof Date) {
+          return raw;
+        }
+
+        const isoDateStr = () => /^(\d{4})-(\d{2})-(\d{2})([ T](\d{2}:\d{2}:\d{2}(\.\d{3})?Z?)?)?$/;
+        if (typeof raw !== 'string' || !isoDateStr().test(raw)) {
+          throw new Error(`Required date field '${field}' is not a date string but is '${raw}'.`)
+        }
+
+        return new Date(raw);
+      },
       number: (raw: any) => {
         if(isNaN(raw)) {
           throw new Error(`Required number field '${field}' is not a number but is '${raw}'.`);
