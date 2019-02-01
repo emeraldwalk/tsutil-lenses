@@ -74,6 +74,7 @@ export function required<
 /**
  * Helpers for common use cases.
  */
+export const requiredDate = required('date');
 export const requiredObject = required('object');
 export const requiredNumber = required('number');
 export const requiredString = required('string');
